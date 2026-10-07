@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DIY蛋糕課程預約</title>
+  <style>
+    body { font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; background: #fdfbf7; padding: 20px; color: #4a4a4a; }
+    .booking-card { max-width: 500px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+    h2 { text-align: center; color: #8d5b4c; margin-bottom: 20px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-weight: bold; margin-bottom: 6px; }
+    input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+    .note { font-size: 12px; color: #777; margin-top: 4px; line-height: 1.4; }
+    .highlight-note { background: #fff3cd; color: #856404; padding: 8px; border-radius: 4px; margin-top: 6px; }
+    button { width: 100%; padding: 12px; background: #c88d79; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+    button:hover { background: #b07360; }
+  </style>
+</head>
+<body>
+
+<div class="booking-card">
+  <h2>🎂 DIY蛋糕課程預約</h2>
+  <form id="bookingForm">
+    
+    <div class="form-group">
+      <label>★ 聯絡人姓名：</label>
+      <input type="text" id="name" required placeholder="請輸入姓名">
+    </div>
+
+    <div class="form-group">
+      <label>★ 電話：</label>
+      <input type="tel" id="phone" required placeholder="例如：0912345678">
+    </div>
+
+    <div class="form-group">
+      <label>LINE ID（非必填）：</label>
+      <input type="text" id="lineId" placeholder="請輸入 LINE ID">
+    </div>
+
+    <div class="form-group">
+      <label>★ 體驗日期：</label>
+      <input type="date" id="date" required>
+    </div>
+
+    <div class="form-group">
+      <label>★ 體驗時間點：</label>
+      <select id="time" required>
+        <option value="">-- 請選擇時間段 --</option>
+        <optgroup label="上午場">
+          <option value="10:00">10:00</option>
+          <option value="10:30">10:30</option>
+          <option value="11:00">11:00</option>
+          <option value="11:30">11:30</option>
+        </optgroup>
+        <optgroup label="下午場">
+          <option value="13:30">13:30</option>
+          <option value="14:00">14:00</option>
+          <option value="14:30">14:30</option>
+          <option value="15:00">15:00</option>
+          <option value="15:30">15:30</option>
+          <option value="16:00">16:00</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>★ 報名課程項目：</label>
+      <select id="course" required onchange="handleCourseChange()">
+        <option value="">-- 請選擇課程 --</option>
+        <!-- 可依據您的圖面替換品名與價格 -->
+        <option value="繽紛水果戚風蛋糕 ($880)">繽紛水果戚風蛋糕 ($880)</option>
+        <option value="千層交織夢 ($980)">千層交織夢 ($980)</option>
+        <option value="濃郁可可經典蛋糕 ($850)">濃郁可可經典蛋糕 ($850)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>★ 報名組數：</label>
+      <input type="number" id="groupCount" min="1" value="1" required>
+    </div>
+
+    <div class="form-group">
+      <label>★ 奶油內餡口味：</label>
+      <select id="filling" required>
+        <option value="牛奶卡士達風味">牛奶卡士達風味</option>
+        <option value="可可風味">可可風味</option>
+        <option value="草莓卡士達風味">草莓卡士達風味</option>
+      </select>
+      <div class="note highlight-note">
+        註一：一組可選一種口味。若口味未回覆，皆以「牛奶卡士達風味」或「當日現場」口味為主，現場不得更換。<br>
+        註二：「千層交織夢」奶油口味固定，無須選擇奶油口味。
+      </div>
+    </div>
+
+    <button type="submit" id="submitBtn">確認提交預約</button>
+  </form>
+</div>
+
+<script>
+  // 自動判斷「千層交織夢」課程鎖定口味選擇
+  function handleCourseChange() {
+    const courseSelect = document.getElementById('course');
+    const fillingSelect = document.getElementById('filling');
+    
+    if (courseSelect.value.includes("千層交織夢")) {
+      fillingSelect.value = "牛奶卡士達風味"; // 或固定預設值
+      fillingSelect.disabled = true;
+    } else {
+      fillingSelect.disabled = false;
+    }
+  }
+
+  document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerText = "預約傳送中...";
+
+    // 替換成您的 Google Apps Script 部署網址
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzPrEkPurtHeDOo_sg8NmK7Ki81wHOGYUli5tGVpG5wlYCjAIBd_sxRN2UPvpTSO2FI/exec';
+
+    const payload = {
+      name: document.getElementById('name').value,
+      phone: document.getElementById('phone').value,
+      lineId: document.getElementById('lineId').value,
+      date: document.getElementById('date').value,
+      time: document.getElementById('time').value,
+      course: document.getElementById('course').value,
+      groupCount: document.getElementById('groupCount').value,
+      filling: document.getElementById('filling').disabled ? "固定口味（千層交織夢）" : document.getElementById('filling').value
+    };
+
+    fetch(scriptURL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(() => {
+      alert("🎉 預約成功！我們將盡快與您聯繫確認。");
+      document.getElementById('bookingForm').reset();
+      document.getElementById('filling').disabled = false;
+      submitBtn.disabled = false;
+      submitBtn.innerText = "確認提交預約";
+    })
+    .catch(error => {
+      alert("預約失敗，請稍後再試或直接聯繫客服。");
+      console.error('Error!', error.message);
+      submitBtn.disabled = false;
+      submitBtn.innerText = "確認提交預約";
+    });
+  });
+</script>
+
+</body>
+</html>
