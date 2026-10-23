@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>塔吉特線上預約表</title>
+    <style>
+        /* 精美現代感外觀 */
+        body { font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; background-color: #f8f9fa; padding: 20px; color: #333; }
+        .booking-container { max-width: 550px; margin: 20px auto; background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h2 { text-align: center; color: #d9383a; margin-bottom: 5px; }
+        .subtitle { text-align: center; color: #666; font-size: 14px; margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 7px; font-weight: bold; color: #495057; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ced4da; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        input:focus, select:focus { border-color: #d9383a; outline: none; box-shadow: 0 0 0 3px rgba(217,56,58,0.1); }
+        .notice { font-size: 13px; color: #6c757d; margin-top: 5px; line-height: 1.4; }
+        .alert-notice { color: #b02a37; font-weight: bold; }
+        button { width: 100%; padding: 14px; background-color: #d9383a; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+        button:hover { background-color: #b02a37; }
+    </style>
+</head>
+<body>
+
+<div class="booking-container">
+    <h2>塔吉特線上預約表</h2>
+    <div class="subtitle">歡迎預約手作體驗，創造屬於你的甜點美學</div>
+    
+    <!-- ⚠️請記得將下方 action 的網址，改成你在 Formspree 申請到的那一串 -->
+    <form action="https://formspree.io/f/xkjjwlkd" method="POST">
+        
+        <!-- 姓名欄位 -->
+        <div class="form-group">
+            <label for="name">顧客姓名：</label>
+            <input type="text" id="name" name="顧客姓名" required placeholder="請輸入您的真實姓名">
+        </div>
+
+        <!-- 手機號碼（10碼，限09開頭） -->
+        <div class="form-group">
+            <label for="phone">手機號碼：</label>
+            <input type="tel" id="phone" name="手機號碼" required pattern="09[0-9]{8}" maxlength="10" placeholder="例如：0912345678">
+            <div class="notice">請輸入 10 碼手機號碼（格式如：0912345678），用於現場報到聯絡。</div>
+        </div>
+
+        <!-- 手作DIY品項 -->
+        <div class="form-group">
+            <label for="diy-item">手作 DIY 品項：</label>
+            <select id="diy-item" name="手作品項" required>
+                <option value="">-- 請選擇體驗品項 --</option>
+                <option value="Level 1｜A 造型千層捲 ($299)">Level 1｜A 造型千層捲 - 特惠價 $299 (原價350)</option>
+                <option value="Level 2｜B 祕蜜花園 ($299)">Level 2｜B 祕蜜花園 - 特惠價 $299 (原價350) ※含微量酒</option>
+                <option value="Level 3｜C 千層繽紛樂 ($450)">Level 3｜C 千層繽紛樂 - 特惠價 $450 (原價599)</option>
+                <option value="Level 4｜D 千層交織夢 ($699)">Level 4｜D 千層交織夢 - 特惠價 $699 (原價750)</option>
+            </select>
+            <div class="notice alert-notice">※ B品項（祕蜜花園）原味/巧克力含有微量調味酒，請留意。</div>
+        </div>
+
+        <!-- 可選口味 -->
+        <div class="form-group">
+            <label for="flavor">希望口味：</label>
+            <select id="flavor" name="希望口味" required>
+                <option value="">-- 請選擇口味 --</option>
+                <option value="牛奶">牛奶 (適用 A、C)</option>
+                <option value="草莓">草莓 (適用 A、C)</option>
+                <option value="巧克力">巧克力 (適用 A、B、C)</option>
+                <option value="抹茶">抹茶 (適用 B)</option>
+                <option value="原味">原味 (適用 B，含微量酒)</option>
+                <option value="固定風味">餡料風味固定 (適用 D)</option>
+            </select>
+            <div class="notice">請對照上方您選擇的品項支援口味。</div>
+        </div>
+
+        <!-- 預約日期 -->
+        <div class="form-group">
+            <label for="date">預約日期：</label>
+            <input type="date" id="date" name="預約日期" required>
+        </div>
+
+        <!-- 預約時段（已取消 12:00 與 12:30） -->
+        <div class="form-group">
+            <label for="time">預約時段：</label>
+            <select id="time" name="預約時段" required>
+                <option value="">-- 請選擇時段 --</option>
+                <option value="10:00">10:00 (第一場)</option>
+                <option value="10:30">10:30</option>
+                <option value="11:00">11:00</option>
+                <option value="11:30">11:30</option>
+                <!-- 12:00 與 12:30 已移除 -->
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00 (最後一場)</option>
+            </select>
+        </div>
+
+        <!-- 備註欄位 -->
+        <div class="form-group">
+            <label for="note">備註/特殊需求：</label>
+            <input type="text" id="note" name="備註事項" placeholder="（選填）有特殊需求請在此註明">
+        </div>
+
+        <!-- 提交按鈕 -->
+        <button type="submit">確認送出預約</button>
+        
+    </form>
+</div>
+
+</body>
+</html>
