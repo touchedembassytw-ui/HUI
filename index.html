@@ -18,6 +18,9 @@
         .alert-notice { color: #b02a37; font-weight: bold; }
         button { width: 100%; padding: 14px; background-color: #d9383a; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
         button:hover { background-color: #b02a37; }
+
+        /* 🔒 蜜罐欄位專用 CSS：確保真人顧客絕對看不到 */
+        .honeypot-field { display: none !important; }
     </style>
 </head>
 <body>
@@ -27,7 +30,7 @@
     <div class="subtitle">歡迎預約手作體驗，創造屬於你的甜點美學</div>
     
     <!-- ⚠️請記得將下方 action 的網址，改成你在 Formspree 申請到的那一串 -->
-    <form action="https://formspree.io/f/xkjjwdga" method="POST">
+    <form action="https://formspree.io" method="POST">
         
         <!-- 姓名欄位 -->
         <div class="form-group">
@@ -35,7 +38,7 @@
             <input type="text" id="name" name="顧客姓名" required placeholder="請輸入您的真實姓名">
         </div>
 
-        <!-- 手機號碼（10碼，限09開頭） -->
+        <!-- 手機號碼 -->
         <div class="form-group">
             <label for="phone">手機號碼：</label>
             <input type="tel" id="phone" name="手機號碼" required pattern="09[0-9]{8}" maxlength="10" placeholder="例如：0912345678">
@@ -76,7 +79,7 @@
             <input type="date" id="date" name="預約日期" required>
         </div>
 
-        <!-- 預約時段（已取消 12:00 與 12:30） -->
+        <!-- 預約時段 -->
         <div class="form-group">
             <label for="time">預約時段：</label>
             <select id="time" name="預約時段" required>
@@ -85,7 +88,6 @@
                 <option value="10:30">10:30</option>
                 <option value="11:00">11:00</option>
                 <option value="11:30">11:30</option>
-                <!-- 12:00 與 12:30 已移除 -->
                 <option value="13:00">13:00</option>
                 <option value="13:30">13:30</option>
                 <option value="14:00">14:00</option>
@@ -100,6 +102,12 @@
         <div class="form-group">
             <label for="note">備註/特殊需求：</label>
             <input type="text" id="note" name="備註事項" placeholder="（選填）有特殊需求請在此註明">
+        </div>
+
+        <!-- 🛡️ Formspree 內建蜜罐欄位（_gotcha） -->
+        <div class="honeypot-field">
+            <label>如果您是人類，請將此欄位留空：</label>
+            <input type="text" name="_gotcha">
         </div>
 
         <!-- 提交按鈕 -->
